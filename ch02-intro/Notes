@@ -1,0 +1,16 @@
+"Record linkage" is the term used by statisticians, epidemiologists, and historians, among others,
+to describe the process of joining records from one data source with another that describe the same entity.
+
+The general structure of the problem is something like this: we have a large collection
+of records from one or more source systems, and it is likely that multiple records
+refer to the same underlying entity, such as a customer, a patient, or the location of a
+business or an event. Each entity has a number of attributes, such as a name, an
+address, or a birthday, and we will need to use these attributes to find the records that
+refer to the same entity.
+
+cd ch02-intro/
+mkdir linkage
+cd linkage/
+curl -L -o donation.zip https://bit.ly/1Aoywaq
+unzip donation.zip
+unzip block_*.zip

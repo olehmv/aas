@@ -1,0 +1,6 @@
+cd ch03-recommender
+mkdir audioscrobbler
+cd audioscrobbler
+curl -L  -o profiledata_06-May-2005.tar.gz http://www.iro.umontreal.ca/~lisa/datasets/profiledata_06-May-2005.tar.gz
+(or here is small version of data set https://github.com/ADBI-Project/Project1)
+tar  profiledata_06-May-2005.tar.gz

@@ -17,14 +17,20 @@ import org.apache.spark.sql.functions._
 object RunRecommender {
 
   def main(args: Array[String]): Unit = {
-    val spark = SparkSession.builder().getOrCreate()
+    val spark = SparkSession.builder
+      .config("spark.master", "local[*]")
+      .config("spark.executor.memory", "6g")
+      .appName("Recommender")
+      .getOrCreate
+    spark.sqlContext.setConf("spark.sql.shuffle.partitions","1")
+    spark.sparkContext.setLogLevel("ERROR")
     // Optional, but may help avoid errors due to long lineage
-    spark.sparkContext.setCheckpointDir("hdfs:///tmp/")
+    spark.sparkContext.setCheckpointDir("ch03-recommender/checkpoint")
 
-    val base = "hdfs:///user/ds/"
-    val rawUserArtistData = spark.read.textFile(base + "user_artist_data.txt")
-    val rawArtistData = spark.read.textFile(base + "artist_data.txt")
-    val rawArtistAlias = spark.read.textFile(base + "artist_alias.txt")
+    val base = "ch03-recommender/audioscrobbler/profiledata_06-May-2005/"
+    val rawUserArtistData = spark.read.textFile(base + "user_artist_data_small.txt")
+    val rawArtistData = spark.read.textFile(base + "artist_data_small.txt")
+    val rawArtistAlias = spark.read.textFile(base + "artist_alias_small.txt")
 
     val runRecommender = new RunRecommender(spark)
     runRecommender.preparation(rawUserArtistData, rawArtistData, rawArtistAlias)
